@@ -1,2 +1,2 @@
-# mvpPractice
-Use of knowledge of the MVP pattern in practice.
+# android-practice-1
+Practical use of knowledge of MVP pattern, ButterKnife and Dagger2 libraries.

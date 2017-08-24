@@ -1,3 +1,9 @@
 <resources>
-    <string name="app_name">mvpPractice</string>
+    <string name="app_name">MVP Test Login</string>
+    <string name="title">Login screen</string>
+    <string name="subTitle">practicing MVP pattern</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
+    <string name="login">Log In</string>
+    <string name="register">or register ?</string>
 </resources>
