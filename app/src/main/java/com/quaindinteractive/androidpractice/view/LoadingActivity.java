@@ -1,4 +1,4 @@
-package com.quaindinteractive.mvppractice.view;
+package com.quaindinteractive.androidpractice.view;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;

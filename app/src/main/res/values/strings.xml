@@ -1,9 +1,15 @@
 <resources>
-    <string name="app_name">MVP Test Login</string>
-    <string name="title">Login screen</string>
+    <string name="app_name">Android Practice</string>
+    <string name="titleLogin">Login screen</string>
+    <string name="titleRegister">Register screen</string>
+    <string name="titleMain">Main screen</string>
     <string name="subTitle">practicing MVP pattern</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
-    <string name="login">Log In</string>
+    <string name="passwordAgain">Password again</string>
+    <string name="loginButton">LOG IN</string>
+    <string name="logoutButton">LOG OUT</string>
+    <string name="registerButton">REGISTER</string>
+    <string name="BackButton">BACK</string>
     <string name="register">or register ?</string>
 </resources>

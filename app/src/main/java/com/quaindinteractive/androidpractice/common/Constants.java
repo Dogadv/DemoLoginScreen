@@ -1,4 +1,4 @@
-package com.quaindinteractive.mvppractice.common;
+package com.quaindinteractive.androidpractice.common;
 
 public final class Constants {
 

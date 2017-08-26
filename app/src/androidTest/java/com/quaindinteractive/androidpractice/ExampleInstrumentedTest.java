@@ -1,4 +1,4 @@
-package com.quaindinteractive.mvppractice;
+package com.quaindinteractive.androidpractice;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;

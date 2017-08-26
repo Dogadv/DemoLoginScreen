@@ -1,4 +1,4 @@
-package com.quaindinteractive.mvppractice;
+package com.quaindinteractive.androidpractice;
 
 import org.junit.Test;
 
