@@ -2,34 +2,29 @@ package com.quaindinteractive.androidpractice.presenter;
 
 import com.quaindinteractive.androidpractice.model.PreferencesHelper;
 import com.quaindinteractive.androidpractice.view.LoginActivity;
-import com.quaindinteractive.androidpractice.view.MainActivity;
 
 public class MainPresenter {
 
     private MainContract view;
-    private PreferencesHelper preferencesHelper;
+    private PreferencesHelper pHelper;
 
-    public MainPresenter(PreferencesHelper preferencesHelper) {
-        this.preferencesHelper = preferencesHelper;
-    }
-
-    public void attachView(MainActivity view) {
+    public MainPresenter(MainContract view, PreferencesHelper preferencesHelper) {
         this.view = view;
+        this.pHelper = preferencesHelper;
     }
 
     public void viewIsReady() {
-        view.setHelloText("Hello, " + preferencesHelper.getCurrentUsername() + "! Now you can log out ;)");
+        view.setHelloText("Hello, " + pHelper.getCurrentUsername() + "! Now you can log out ;)");
     }
 
-    public void detachView() {
-        this.view = null;
+    public void detachAll() {
+        view = null;
+        pHelper = null;
     }
 
     public void onLogoutPressed() {
-        preferencesHelper.clearUser();
+        pHelper.clearUser();
         LoginActivity.createLogin(view.getContext());
         view.finishView();
     }
-
-
 }

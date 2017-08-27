@@ -6,7 +6,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 
 import com.quaindinteractive.androidpractice.R;
@@ -26,7 +25,7 @@ public class MainActivity extends AppCompatActivity implements MainContract{
     TextView helloText;
 
     private MainPresenter presenter;
-    private PreferencesHelper preferencesHelper;
+    private PreferencesHelper pHelper;
 
     public static void createMain(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -40,6 +39,9 @@ public class MainActivity extends AppCompatActivity implements MainContract{
 
         ButterKnife.bind(this);
 
+        pHelper = new PreferencesHelper(this);
+        presenter = new MainPresenter(this, pHelper);
+
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,18 +49,15 @@ public class MainActivity extends AppCompatActivity implements MainContract{
             }
         });
 
-        preferencesHelper = new PreferencesHelper(this);
-        presenter = new MainPresenter(preferencesHelper);
-        presenter.attachView(this);
         presenter.viewIsReady();
     }
 
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
+        presenter.detachAll();
         presenter = null;
-        preferencesHelper = null;
+        pHelper = null;
     }
 
     @Override

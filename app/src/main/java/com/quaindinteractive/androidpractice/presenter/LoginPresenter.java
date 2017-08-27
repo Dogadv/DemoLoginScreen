@@ -12,8 +12,8 @@ import java.util.HashMap;
 public class LoginPresenter {
 
     private LoginContract view;
-    private UserModel model;
-    private PreferencesHelper preferencesHelper;
+    private UserModel userModel;
+    private PreferencesHelper pHelper;
     private HashMap<String, User> users;
 
     private static final String INCORRECT_ERROR = "Incorrect username or password.";
@@ -21,9 +21,10 @@ public class LoginPresenter {
     private static final String EMPTY = "";
     private String ERROR;
 
-    public LoginPresenter(UserModel model, final PreferencesHelper preferencesHelper) {
-        this.model = model;
-        this.preferencesHelper = preferencesHelper;
+    public LoginPresenter(final LoginContract view, UserModel model, final PreferencesHelper preferencesHelper) {
+        this.view = view;
+        this.userModel = model;
+        this.pHelper = preferencesHelper;
         model.loadUsers(new UserModel.LoadsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
@@ -39,19 +40,16 @@ public class LoginPresenter {
         });
     }
 
-    public void attachView(LoginContract view) {
-        this.view = view;
-    }
-
-    public void detachView() {
+    public void detachAll() {
+        pHelper = null;
+        userModel = null;
         view = null;
-        model = null;
+        users.clear();
         users = null;
-        preferencesHelper = null;
     }
 
     public void onViewResume() {
-        model.loadUsers(new UserModel.LoadsersCallback() {
+        userModel.loadUsers(new UserModel.LoadsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;
@@ -64,7 +62,7 @@ public class LoginPresenter {
                 User user = users.get(username);
                 if (user.getPassword().contentEquals(password)) {
                     ERROR = EMPTY;
-                    preferencesHelper.changeUser(username, password);
+                    pHelper.changeUser(username, password);
                     MainActivity.createMain(view.getContext());
                     view.finishView();
                 } else {
@@ -80,14 +78,5 @@ public class LoginPresenter {
     }
     public void onRegisterPressed() {
         RegisterActivity.createRegister(view.getContext());
-    }
-
-    private void loadUsers() {
-        model.loadUsers(new UserModel.LoadsersCallback() {
-            @Override
-            public void onLoaded(HashMap<String, User> usersDb) {
-                users = usersDb;
-            }
-        });
     }
 }

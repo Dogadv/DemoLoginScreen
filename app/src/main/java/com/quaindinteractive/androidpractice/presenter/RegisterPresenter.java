@@ -13,7 +13,7 @@ import java.util.HashMap;
 public class RegisterPresenter {
 
     private RegisterContract view;
-    private UserModel model;
+    private UserModel userModel;
     private HashMap<String, User> users;
 
     private final String EMPTY = "";
@@ -26,17 +26,14 @@ public class RegisterPresenter {
     private boolean isUsernameEmpty = true, isPasswordAgainEmpty = true;
     private int usernameColor, passwordColor;
 
-    public RegisterPresenter(UserModel model) {
-        this.model = model;
-    }
-
-    public void attachView(RegisterContract view) {
+    public RegisterPresenter(RegisterContract view, UserModel userModel) {
         this.view = view;
+        this.userModel = userModel;
     }
 
-    public void detachView() {
+    public void detachAll() {
         view = null;
-        model = null;
+        userModel = null;
         users = null;
     }
 
@@ -94,7 +91,7 @@ public class RegisterPresenter {
         cv.put(UserTable.COLUMN.USERNAME, username);
         cv.put(UserTable.COLUMN.PASSWORD, password);
         view.showProgress();
-        model.addUser(cv, new UserModel.AddusersCallback() {
+        userModel.addUser(cv, new UserModel.AddusersCallback() {
             @Override
             public void onAdded() {
                 view.hideProgress();
@@ -102,9 +99,8 @@ public class RegisterPresenter {
             }
         });
     }
-
     private void loadUsers() {
-        model.loadUsers(new UserModel.LoadsersCallback() {
+        userModel.loadUsers(new UserModel.LoadsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;

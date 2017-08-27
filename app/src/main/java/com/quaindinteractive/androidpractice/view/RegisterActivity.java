@@ -3,20 +3,16 @@ package com.quaindinteractive.androidpractice.view;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Color;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.quaindinteractive.androidpractice.R;
-import com.quaindinteractive.androidpractice.common.Constants;
 import com.quaindinteractive.androidpractice.model.DatabaseHelper;
 import com.quaindinteractive.androidpractice.model.UserModel;
 import com.quaindinteractive.androidpractice.presenter.RegisterContract;
@@ -24,7 +20,6 @@ import com.quaindinteractive.androidpractice.presenter.RegisterPresenter;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.Unbinder;
 
 public class RegisterActivity extends AppCompatActivity implements RegisterContract {
 
@@ -43,9 +38,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @BindView(R.id.register)
     Button register;
 
-    private ProgressDialog progress;
-    private DatabaseHelper databaseHelper;
-    private UserModel model;
+    private ProgressDialog progressDialog;
+    private DatabaseHelper dbHelper;
+    private UserModel userModel;
     private RegisterPresenter presenter;
 
     public  static void createRegister(Context context) {
@@ -59,10 +54,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         setContentView(R.layout.activity_register);
 
         ButterKnife.bind(this);
-        databaseHelper = new DatabaseHelper(this);
-        model = new UserModel(databaseHelper);
-        presenter = new RegisterPresenter(model);
-        presenter.attachView(this);
+        dbHelper = new DatabaseHelper(this);
+        userModel = new UserModel(dbHelper);
+        presenter = new RegisterPresenter(this, userModel);
         presenter.onViewCreate();
 
         register.setOnClickListener(new View.OnClickListener() {
@@ -88,7 +82,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
             }
         });
-
         password.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -105,7 +98,6 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
 
             }
         });
-
         passwordAgain.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -133,27 +125,22 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     @Override
     public void onDestroy() {
         super.onDestroy();
-        presenter.detachView();
+        presenter.detachAll();
         presenter = null;
-        model.dispose();
-        model = null;
-        databaseHelper = null;
-        progress = null;
-    }
-
-    @Override
-    public void showToast(final String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        userModel.dispose();
+        userModel = null;
+        dbHelper = null;
+        progressDialog = null;
     }
 
     @Override
     public void showProgress() {
-        progress = ProgressDialog.show(this, "", "Please, wait.");
+        progressDialog = ProgressDialog.show(this, "", "Please, wait.");
     }
 
     @Override
     public void hideProgress() {
-        if(progress != null) progress.hide();
+        if(progressDialog != null) progressDialog.hide();
     }
 
     public void setErrorMessage(final String message, EditText editText, int color) {
@@ -161,6 +148,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         errorMessage.setText(message);
     }
 
+    @Override
     public EditText getUsername() {
         return username;
     }
@@ -170,10 +158,12 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         return password;
     }
 
+    @Override
     public EditText getPasswordAgain(){
         return passwordAgain;
     }
 
+    @Override
     public Button getRegister(){
         return register;
     }
@@ -183,6 +173,7 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         return this;
     }
 
+    @Override
     public void finishView() {
         finish();
     }

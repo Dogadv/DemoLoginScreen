@@ -4,7 +4,6 @@ import android.content.Context;
 import android.widget.EditText;
 
 public interface ViewContract {
-    void showToast(final String message);
     void showProgress();
     void hideProgress();
     void finishView();
