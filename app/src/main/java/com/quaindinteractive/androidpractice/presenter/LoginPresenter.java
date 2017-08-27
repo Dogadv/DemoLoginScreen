@@ -19,6 +19,7 @@ public class LoginPresenter {
     private static final String INCORRECT_ERROR = "Incorrect username or password.";
     private static final String NOT_FILLED_EROR = "Not all fields are filled.";
     private static final String EMPTY = "";
+    @SuppressWarnings("FieldCanBeLocal")
     private String ERROR;
 
     public LoginPresenter(final LoginContract view, UserModel model, final PreferencesHelper preferencesHelper) {
@@ -29,7 +30,7 @@ public class LoginPresenter {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;
-                if(users.containsKey(preferencesHelper.getCurrentUsername())) {
+                if (users.containsKey(preferencesHelper.getCurrentUsername())) {
                     User user = users.get(preferencesHelper.getCurrentUsername());
                     if (user.getPassword().contentEquals(preferencesHelper.getCurrentPassword())) {
                         MainActivity.createMain(view.getContext());
@@ -53,11 +54,12 @@ public class LoginPresenter {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;
-            }});
+            }
+        });
     }
 
     public void onLoginPressed(String username, String password) {
-        if(!username.isEmpty() && !password.isEmpty()) {
+        if (!username.isEmpty() && !password.isEmpty()) {
             if (users.containsKey(username)) {
                 User user = users.get(username);
                 if (user.getPassword().contentEquals(password)) {
@@ -76,6 +78,7 @@ public class LoginPresenter {
         }
         view.setErrorMessage(ERROR);
     }
+
     public void onRegisterPressed() {
         RegisterActivity.createRegister(view.getContext());
     }

@@ -9,10 +9,10 @@ import java.util.concurrent.TimeUnit;
 
 public class UserModel {
 
-    DatabaseHelper database;
+    private static DatabaseHelper database;
 
     public UserModel(final DatabaseHelper database) {
-        this.database = database;
+        UserModel.database = database;
     }
 
     public void loadUsers(LoadsersCallback callback) {
@@ -33,11 +33,11 @@ public class UserModel {
         void onAdded();
     }
 
-    class LoadUsersTask extends AsyncTask<Void, Void, HashMap<String, User>> {
+    static class LoadUsersTask extends AsyncTask<Void, Void, HashMap<String, User>> {
 
         final LoadsersCallback callback;
 
-        public LoadUsersTask(LoadsersCallback callback) {
+        LoadUsersTask(LoadsersCallback callback) {
             this.callback = callback;
         }
         @Override
@@ -50,6 +50,7 @@ public class UserModel {
                 user.setUsername(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.USERNAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.PASSWORD)));
                 users.put(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.USERNAME)), user);
+                cursor.close();
             }
             return users;
         }
@@ -60,11 +61,11 @@ public class UserModel {
         }
     }
 
-    class AddUserTask extends  AsyncTask<ContentValues, Void, Void> {
+    static class AddUserTask extends  AsyncTask<ContentValues, Void, Void> {
 
         final AddusersCallback callback;
 
-        public AddUserTask(AddusersCallback callback) {
+        AddUserTask(AddusersCallback callback) {
             this.callback = callback;
         }
 

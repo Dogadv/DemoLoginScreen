@@ -8,13 +8,11 @@ public class PreferencesHelper {
     private static final String FILE_NAME = "currentUser";
     private static final String USERNAME = "username";
     private static final String PASSWORD = "password";
-    private SharedPreferences.Editor editor;
 
-    SharedPreferences sharedPrefs;
+    private SharedPreferences sharedPrefs;
 
     public PreferencesHelper(Context context){
         sharedPrefs = context.getSharedPreferences(FILE_NAME, 0);
-        editor = sharedPrefs.edit();
     }
 
     public String getCurrentUsername() {
@@ -26,14 +24,16 @@ public class PreferencesHelper {
     }
 
     public void changeUser(String username, String password) {
-        editor.putString(USERNAME, username);
-        editor.putString(PASSWORD, password);
-        editor.commit();
+        getEditor().putString(USERNAME, username).apply();
+        getEditor().putString(PASSWORD, password).apply();
     }
 
     public void clearUser() {
-        editor.putString(USERNAME, "null");
-        editor.putString(PASSWORD, "null");
-        editor.commit();
+        getEditor().putString(USERNAME, "null").apply();
+        getEditor().putString(PASSWORD, "null").apply();
+    }
+
+    private SharedPreferences.Editor getEditor() {
+        return sharedPrefs.edit();
     }
 }

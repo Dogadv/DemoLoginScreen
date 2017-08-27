@@ -1,6 +1,5 @@
 package com.quaindinteractive.androidpractice.presenter;
 
-import android.content.Context;
 import android.widget.Button;
 import android.widget.EditText;
 

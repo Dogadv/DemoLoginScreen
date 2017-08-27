@@ -2,21 +2,21 @@ package com.quaindinteractive.androidpractice.model;
 
 public class User {
 
-    int id;
-    String username;
-    String password;
+    private int id;
+    private String username;
+    private String password;
 
-    public void setID(final int id){
+    void setID(final int id){
         this.id = id;
     }
-    public void setUsername(final String username) {
+    void setUsername(final String username) {
         this.username = username;
     }
-    public void setPassword(final String password) {
+    void setPassword(final String password) {
         this.password = password;
     }
 
-    public int getId(){
+    int getId(){
         return  id;
     }
     public String getUsername() {

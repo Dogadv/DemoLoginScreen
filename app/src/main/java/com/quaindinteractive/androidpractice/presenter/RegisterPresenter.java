@@ -10,6 +10,7 @@ import com.quaindinteractive.androidpractice.model.UserModel;
 
 import java.util.HashMap;
 
+@SuppressWarnings("ALL")
 public class RegisterPresenter {
 
     private RegisterContract view;
