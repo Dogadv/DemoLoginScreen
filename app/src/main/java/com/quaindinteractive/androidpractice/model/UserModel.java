@@ -50,8 +50,8 @@ public class UserModel {
                 user.setUsername(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.USERNAME)));
                 user.setPassword(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.PASSWORD)));
                 users.put(cursor.getString(cursor.getColumnIndex(UserTable.COLUMN.USERNAME)), user);
-                cursor.close();
             }
+            cursor.close();
             return users;
         }
 
