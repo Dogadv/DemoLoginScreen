@@ -4,7 +4,7 @@ import android.content.ContentValues;
 import android.graphics.Color;
 import android.text.Editable;
 
-import com.quaindinteractive.androidpractice.common.UserTable;
+import com.quaindinteractive.androidpractice.model.UserTable;
 import com.quaindinteractive.androidpractice.model.User;
 import com.quaindinteractive.androidpractice.model.UserModel;
 

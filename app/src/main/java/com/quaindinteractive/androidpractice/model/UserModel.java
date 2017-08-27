@@ -4,8 +4,6 @@ import android.content.ContentValues;
 import android.database.Cursor;
 import android.os.AsyncTask;
 
-import com.quaindinteractive.androidpractice.common.UserTable;
-
 import java.util.HashMap;
 import java.util.concurrent.TimeUnit;
 

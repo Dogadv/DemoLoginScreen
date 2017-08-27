@@ -1,4 +1,4 @@
-package com.quaindinteractive.androidpractice.common;
+package com.quaindinteractive.androidpractice.model;
 
 public class UserTable {
 
