@@ -3,7 +3,7 @@
     <string name="titleLogin">Login screen</string>
     <string name="titleRegister">Register screen</string>
     <string name="titleMain">Main screen</string>
-    <string name="subTitle">practicing MVP pattern</string>
+    <string name="subTitle">Practical use of \n MVP, Dagger2 and ButterKnife</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     <string name="passwordAgain">Password again</string>

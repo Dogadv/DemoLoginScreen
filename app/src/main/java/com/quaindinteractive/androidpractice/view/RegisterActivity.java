@@ -13,10 +13,13 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.quaindinteractive.androidpractice.R;
+import com.quaindinteractive.androidpractice.dagger.DaggerApplication;
 import com.quaindinteractive.androidpractice.model.DatabaseHelper;
 import com.quaindinteractive.androidpractice.model.UserModel;
 import com.quaindinteractive.androidpractice.presenter.RegisterContract;
 import com.quaindinteractive.androidpractice.presenter.RegisterPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,9 +42,9 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
     Button register;
 
     private ProgressDialog progressDialog;
-    private DatabaseHelper dbHelper;
-    private UserModel userModel;
-    private RegisterPresenter presenter;
+    @Inject DatabaseHelper dbHelper;
+    @Inject UserModel userModel;
+    @Inject RegisterPresenter presenter;
 
     public  static void createRegister(Context context) {
         Intent intent = new Intent(context, RegisterActivity.class);
@@ -54,9 +57,8 @@ public class RegisterActivity extends AppCompatActivity implements RegisterContr
         setContentView(R.layout.activity_register);
 
         ButterKnife.bind(this);
-        dbHelper = new DatabaseHelper(this);
-        userModel = new UserModel(dbHelper);
-        presenter = new RegisterPresenter(this, userModel);
+        ((DaggerApplication) getApplication()).getAppComponent(this).inject(this);
+
         presenter.onViewCreate();
 
         register.setOnClickListener(new View.OnClickListener() {

@@ -15,29 +15,29 @@ public class UserModel {
         UserModel.database = database;
     }
 
-    public void loadUsers(LoadsersCallback callback) {
+    public void loadUsers(LoadUsersCallback callback) {
         LoadUsersTask loadUsersTask = new LoadUsersTask(callback);
         loadUsersTask.execute();
     }
 
-    public void addUser(ContentValues user, AddusersCallback callback) {
+    public void addUser(ContentValues user, AddUserCallback callback) {
         AddUserTask addUserTask = new AddUserTask(callback);
         addUserTask.execute(user);
     }
 
-    public interface LoadsersCallback {
+    public interface LoadUsersCallback {
         void onLoaded(HashMap<String, User> users);
     }
 
-    public interface AddusersCallback {
+    public interface AddUserCallback {
         void onAdded();
     }
 
     static class LoadUsersTask extends AsyncTask<Void, Void, HashMap<String, User>> {
 
-        final LoadsersCallback callback;
+        final LoadUsersCallback callback;
 
-        LoadUsersTask(LoadsersCallback callback) {
+        LoadUsersTask(LoadUsersCallback callback) {
             this.callback = callback;
         }
         @Override
@@ -63,9 +63,9 @@ public class UserModel {
 
     static class AddUserTask extends  AsyncTask<ContentValues, Void, Void> {
 
-        final AddusersCallback callback;
+        final AddUserCallback callback;
 
-        AddUserTask(AddusersCallback callback) {
+        AddUserTask(AddUserCallback callback) {
             this.callback = callback;
         }
 

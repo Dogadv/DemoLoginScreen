@@ -4,6 +4,7 @@ package com.quaindinteractive.androidpractice.presenter;
 import com.quaindinteractive.androidpractice.model.PreferencesHelper;
 import com.quaindinteractive.androidpractice.model.User;
 import com.quaindinteractive.androidpractice.model.UserModel;
+import com.quaindinteractive.androidpractice.presenter.contract.LoginContract;
 import com.quaindinteractive.androidpractice.view.MainActivity;
 import com.quaindinteractive.androidpractice.view.RegisterActivity;
 
@@ -26,7 +27,7 @@ public class LoginPresenter {
         this.view = view;
         this.userModel = model;
         this.pHelper = preferencesHelper;
-        model.loadUsers(new UserModel.LoadsersCallback() {
+        model.loadUsers(new UserModel.LoadUsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;
@@ -50,7 +51,7 @@ public class LoginPresenter {
     }
 
     public void onViewResume() {
-        userModel.loadUsers(new UserModel.LoadsersCallback() {
+        userModel.loadUsers(new UserModel.LoadUsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;

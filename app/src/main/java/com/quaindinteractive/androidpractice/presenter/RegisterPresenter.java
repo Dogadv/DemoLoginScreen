@@ -92,7 +92,7 @@ public class RegisterPresenter {
         cv.put(UserTable.COLUMN.USERNAME, username);
         cv.put(UserTable.COLUMN.PASSWORD, password);
         view.showProgress();
-        userModel.addUser(cv, new UserModel.AddusersCallback() {
+        userModel.addUser(cv, new UserModel.AddUserCallback() {
             @Override
             public void onAdded() {
                 view.hideProgress();
@@ -101,7 +101,7 @@ public class RegisterPresenter {
         });
     }
     private void loadUsers() {
-        userModel.loadUsers(new UserModel.LoadsersCallback() {
+        userModel.loadUsers(new UserModel.LoadUsersCallback() {
             @Override
             public void onLoaded(HashMap<String, User> usersDb) {
                 users = usersDb;

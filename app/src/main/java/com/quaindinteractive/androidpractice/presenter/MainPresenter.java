@@ -1,6 +1,7 @@
 package com.quaindinteractive.androidpractice.presenter;
 
 import com.quaindinteractive.androidpractice.model.PreferencesHelper;
+import com.quaindinteractive.androidpractice.presenter.contract.MainContract;
 import com.quaindinteractive.androidpractice.view.LoginActivity;
 
 public class MainPresenter {

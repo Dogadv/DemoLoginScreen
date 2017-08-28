@@ -1,6 +1,5 @@
 package com.quaindinteractive.androidpractice.view;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,11 +10,14 @@ import android.widget.EditText;
 import android.widget.TextView;
 
 import com.quaindinteractive.androidpractice.R;
+import com.quaindinteractive.androidpractice.dagger.DaggerApplication;
 import com.quaindinteractive.androidpractice.model.DatabaseHelper;
 import com.quaindinteractive.androidpractice.model.PreferencesHelper;
 import com.quaindinteractive.androidpractice.model.UserModel;
-import com.quaindinteractive.androidpractice.presenter.LoginContract;
 import com.quaindinteractive.androidpractice.presenter.LoginPresenter;
+import com.quaindinteractive.androidpractice.presenter.contract.LoginContract;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -39,11 +41,10 @@ public class LoginActivity extends AppCompatActivity implements LoginContract {
     @BindView(R.id.errorMessageLogin)
     TextView errorMessage;
 
-    private ProgressDialog progressDialog;
-    private DatabaseHelper dbHelper;
-    private PreferencesHelper pHelper;
-    private UserModel userModel;
-    private LoginPresenter presenter;
+    @Inject DatabaseHelper dbHelper;
+    @Inject PreferencesHelper pHelper;
+    @Inject UserModel userModel;
+    @Inject LoginPresenter presenter;
 
     public static void createLogin(Context context) {
         Intent intent = new Intent(context, LoginActivity.class);
@@ -56,10 +57,7 @@ public class LoginActivity extends AppCompatActivity implements LoginContract {
         setContentView(R.layout.activity_login);
         ButterKnife.bind(this);
 
-        dbHelper = new DatabaseHelper(this);
-        pHelper = new PreferencesHelper(this);
-        userModel = new UserModel(dbHelper);
-        presenter = new LoginPresenter(this, userModel, pHelper);
+        ((DaggerApplication) getApplication()).getAppComponent(this).inject(this);
 
         login.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,24 +87,11 @@ public class LoginActivity extends AppCompatActivity implements LoginContract {
         userModel.dispose();
         userModel = null;
         dbHelper = null;
-        progressDialog = null;
         pHelper = null;
     }
 
-    @Override
-    public void showProgress() {
-        progressDialog = ProgressDialog.show(this, "", "Please, wait.");
-    }
-
-    @Override
-    public void hideProgress() {
-        if (progressDialog != null) progressDialog.hide();
-    }
-
-    @Override
-    public void finishView() {
-        finish();
-    }
+    @Override public void finishView() {
+        finish();}
 
     @Override
     public EditText getUsername() {

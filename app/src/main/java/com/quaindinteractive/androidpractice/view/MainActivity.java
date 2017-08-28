@@ -9,9 +9,12 @@ import android.widget.Button;
 import android.widget.TextView;
 
 import com.quaindinteractive.androidpractice.R;
+import com.quaindinteractive.androidpractice.dagger.DaggerApplication;
 import com.quaindinteractive.androidpractice.model.PreferencesHelper;
-import com.quaindinteractive.androidpractice.presenter.MainContract;
+import com.quaindinteractive.androidpractice.presenter.contract.MainContract;
 import com.quaindinteractive.androidpractice.presenter.MainPresenter;
+
+import javax.inject.Inject;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -24,8 +27,8 @@ public class MainActivity extends AppCompatActivity implements MainContract{
     @BindView(R.id.helloText)
     TextView helloText;
 
-    private MainPresenter presenter;
-    private PreferencesHelper pHelper;
+    @Inject MainPresenter presenter;
+    @Inject PreferencesHelper pHelper;
 
     public static void createMain(Context context) {
         Intent intent = new Intent(context, MainActivity.class);
@@ -39,8 +42,7 @@ public class MainActivity extends AppCompatActivity implements MainContract{
 
         ButterKnife.bind(this);
 
-        pHelper = new PreferencesHelper(this);
-        presenter = new MainPresenter(this, pHelper);
+        ((DaggerApplication) getApplication()).getAppComponent(this).inject(this);
 
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
