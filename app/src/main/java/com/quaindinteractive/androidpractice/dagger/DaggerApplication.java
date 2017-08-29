@@ -15,7 +15,6 @@ public class DaggerApplication extends Application {
         super.onCreate();
 
         component = DaggerApplicationComponent.builder().applicationModule(new ApplicationModule(this)).build();
-        component.inject(this);
     }
 
     public ApplicationComponent getAppComponent(ViewContract contract) {
